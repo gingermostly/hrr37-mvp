@@ -12,7 +12,6 @@ export default class App extends Component {
     this.handlePress = this.handlePress.bind(this)
   }
   handlePress() {
-
       fetch('https://inspirobot.me/api?generate=true')
         .then((res) => {
           return res.text()
@@ -28,9 +27,10 @@ export default class App extends Component {
       uri: this.state.getImage
     }
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Image source={pic} style={{width: 300, height: 400}} />
-        <Button onPress={this.handlePress} title="Generate Inspiration"/>
+      <View style={{ flex: 1, flexirection: "column", justifyContent: "center", alignItems: "center" }}>
+
+        <Image source={pic} style={{width: 300, height: 400, resizeMode: 'contain'}} />
+        <Button onPress={this.handlePress} title="Generate Inspiration" accessibilityLabel="Click button to generate quote" />
       </View>
     );
   }
