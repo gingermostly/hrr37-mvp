@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 export default class App extends Component {
   render() {
+    let pic = {
+      uri: 'https://generated.inspirobot.me/a/p9eZk8yqJV.jpg'
+    }
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Hello, world!</Text>
+        <Image source={pic} style={{width: 300, height: 300}} />
       </View>
     );
   }
