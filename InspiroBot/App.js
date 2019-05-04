@@ -7,28 +7,30 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      getImage: ''
+      getImage: 'https://i.imgur.com/2h816KP.jpg'
     }
+    this.handlePress = this.handlePress.bind(this)
   }
-  componentDidMount() {
-    fetch('https://inspirobot.me/api?generate=true')
-      .then((res) => {
-        return res.text()
+  handlePress() {
+
+      fetch('https://inspirobot.me/api?generate=true')
+        .then((res) => {
+          return res.text()
+      })
+        .then((item) => {
+         this.setState({
+        getImage: item
     })
-      .then((item) => {
-       this.setState({
-         getImage: item
-       })
-    })
-  }
+  })
+}
   render() {
     let pic = {
       uri: this.state.getImage
     }
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Image source={pic} style={{width: 300, height: 300}} />
-        <Button title="Generate Inspiration"/>
+        <Image source={pic} style={{width: 300, height: 400}} />
+        <Button onPress={this.handlePress} title="Generate Inspiration"/>
       </View>
     );
   }
