@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Image, View } from 'react-native';
-
+import { TouchableOpacity, Text, Button, Image, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class App extends Component {
 
@@ -28,10 +28,16 @@ export default class App extends Component {
     }
     return (
       <View style={{ flex: 1, flexirection: "column", justifyContent: "center", alignItems: "center" }}>
-
+        <Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: 10}}>InspiroBot Mobile</Text>
         <Image source={pic} style={{width: 300, height: 400, resizeMode: 'contain'}} />
-        <Button onPress={this.handlePress} title="Generate Inspiration" accessibilityLabel="Click button to generate quote" />
+        <TouchableOpacity onPress={this.handlePress}><Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: 10}}>Generate inspiration</Text></TouchableOpacity>
+        <TouchableOpacity onPress={this.saveData}>
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Click to save quote</Text>
+        </TouchableOpacity>
       </View>
     );
+  }
+  saveData() {
+    alert('saved!')
   }
 }
