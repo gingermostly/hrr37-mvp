@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, Button, Image, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { ActionSheetIOS, TouchableOpacity, TouchableHighlight, Text, Image, View } from 'react-native';
+import CameraRoll from '@react-native-community/cameraroll';
+import * as RNFS from 'react-native-fs';
+
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      getImage: 'https://i.imgur.com/2h816KP.jpg'
+      getImage: 'https://i.imgur.com/2h816KP.jpg',
+
     }
-    this.handlePress = this.handlePress.bind(this)
+    this.handlePress = this.handlePress.bind(this);
+    this.handleImagePress = this.handleImagePress.bind(this);
   }
   handlePress() {
       fetch('https://inspirobot.me/api?generate=true')
@@ -22,6 +26,13 @@ export default class App extends Component {
     })
   })
 }
+handleImagePress() {
+  ActionSheetIOS.showActionSheetWithOptions({options: ['Save Image', 'Cancel'], saveButtonIndex: 0, cancelButtonIndex: 1}, (index) => {
+    if(index === 0) {
+      CameraRoll.saveToCameraRoll(this.state.getImage)
+    }
+  })
+}
   render() {
     let pic = {
       uri: this.state.getImage
@@ -29,15 +40,11 @@ export default class App extends Component {
     return (
       <View style={{ flex: 1, flexirection: "column", justifyContent: "center", alignItems: "center" }}>
         <Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: 10}}>InspiroBot Mobile</Text>
+        <TouchableHighlight onPress={this.handleImagePress}>
         <Image source={pic} style={{width: 300, height: 400, resizeMode: 'contain'}} />
+        </TouchableHighlight>
         <TouchableOpacity onPress={this.handlePress}><Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: 10}}>Generate inspiration</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.saveData}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Click to save quote</Text>
-        </TouchableOpacity>
       </View>
     );
-  }
-  saveData() {
-    alert('saved!')
   }
 }
